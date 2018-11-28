@@ -3,9 +3,10 @@ import { Component } from 'react';
 import { Permissions, ImagePicker } from 'expo';
 import { Text } from 'react-native';
 import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import { Camera } from 'expo';
 import { Alert } from 'react-native';
+import { Button } from 'react-native-elements';
 
 interface State {
   hasCameraPermission: boolean | undefined;
@@ -44,44 +45,25 @@ export default class PictureScreen extends Component<Props, State> {
       return <Text>No access to camera</Text>;
     }
     return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: 'dodgerblue',
-            flex: 0.5,
-            height: 40,
-            marginHorizontal: 2,
-            marginBottom: 50,
-            marginTop: 20,
-            borderRadius: 8,
-            borderColor: 'white',
-            borderWidth: 1,
-            padding: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={() => this.takePic()}
-        >
-          <Text style={{ color: 'white', fontSize: 15 }}> Capture</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}
+      >
+        <TouchableOpacity onPress={() => this.takePic()}>
+          <Image
+            style={{ height: 250, width: 250 }}
+            source={require('../images/CameraIcon.png')}
+          />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: 'dodgerblue',
-            flex: 0.5,
-            height: 40,
-            marginHorizontal: 2,
-            marginBottom: 50,
-            marginTop: 20,
-            borderRadius: 8,
-            borderColor: 'white',
-            borderWidth: 1,
-            padding: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={() => this.pickImage()}
-        >
-          <Text style={{ color: 'white', fontSize: 15 }}> Gallery</Text>
+        <TouchableOpacity onPress={() => this.pickImage()}>
+          <Image
+            style={{ height: 250, width: 250 }}
+            source={require('../images/GalleryIcon.png')}
+          />
         </TouchableOpacity>
       </View>
     );
