@@ -7,6 +7,7 @@ import { TouchableOpacity, Image } from 'react-native';
 import { Camera } from 'expo';
 import { Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Results from '../components/Results';
 
 interface State {
   hasCameraPermission: boolean | undefined;
@@ -14,7 +15,7 @@ interface State {
   image: string;
 }
 export interface Props {
-  navigation: string;
+  navigation: object;
 }
 
 export default class PictureScreen extends Component<Props, State> {
@@ -28,6 +29,7 @@ export default class PictureScreen extends Component<Props, State> {
     this.takePic = this.takePic.bind(this);
     this.pickImage = this.pickImage.bind(this);
   }
+  static navigationOptions = { title: 'Select a Picture' };
   public async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA).then(() =>
       Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -37,7 +39,9 @@ export default class PictureScreen extends Component<Props, State> {
 
   public render() {
     const { hasCameraPermission } = this.state;
-
+    if (this.state.image !== '') {
+      return <Results uri={this.state.image} />;
+    }
     if (hasCameraPermission === undefined) {
       return <Text>Get permission to Camera</Text>;
     }
@@ -79,7 +83,6 @@ export default class PictureScreen extends Component<Props, State> {
       if (image.cancelled === false) {
         this.setState({ image: image.uri });
       }
-      Alert.alert(this.state.image);
     }
   };
   private pickImage = async () => {
@@ -94,7 +97,6 @@ export default class PictureScreen extends Component<Props, State> {
       if (image.cancelled === false) {
         this.setState({ image: image.uri });
       }
-      Alert.alert(this.state.image);
     }
   };
 }
